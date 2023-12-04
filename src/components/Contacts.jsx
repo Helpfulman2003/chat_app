@@ -19,7 +19,7 @@ const Contacts = ({ contacts, changeChat }) => {
         >
           <div className="flex items-center justify-center gap-[1rem]">
             <img src={Logo} alt="" className="h-[2rem]" />
-            <h3 className="text-white uppercase">SNAPPY</h3>
+            <h3 className="text-white uppercase">HELPFULMAN</h3>
           </div>
           <div className="flex flex-col items-center overflow-auto gap-[0.8rem]">
             {contacts.map((contact, index) => {
