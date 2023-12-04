@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Logo from "../assets/logo.svg";
 import { useFormik } from "formik";
@@ -19,6 +19,7 @@ const Register = () => {
   //     setValues({...values, [e.target.name]: e.target.value})
   //   };
   const navigate = useNavigate()
+  const [isExpanded, setIsExpanded] = useState(false);
 
   const formik = useFormik({
     initialValues: {
@@ -44,13 +45,14 @@ const Register = () => {
         .required("Required")
         .matches(
           /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[!@#$%^&*()_+])[A-Za-z\d][A-Za-z\d!@#$%^&*()_+]{7,19}$/,
-          "Password must be 7-19 characters and contain at least one letter, one number and a special character"
+          "Password must be 7-19 characters"
         ),
       confirmPassword: Yup.string()
         .required("Required")
         .oneOf([Yup.ref("password")], "Password's not match"),
     }),
     onSubmit: async (values) => {
+      setIsExpanded(true);
       const { data } = await axios.post(registerRoute, values);
       if (data.success) {
         navigate('/')
@@ -73,58 +75,58 @@ const Register = () => {
 
   return (
     <>
-      <div className="w-screen h-screen flex flex-col justify-center gap-[1rem] items-center bg-[#131324]">
+      <div className="h-screen flex flex-col justify-center gap-[1rem] items-center bg-[#131324] overflow-y-auto">
         <form
           onSubmit={formik.handleSubmit}
-          className="flex flex-col gap-8 bg-[#00000076] rounded-[2rem] px-20 py-12"
+          className="flex gap-[1rem] flex-col bg-[#00000076] rounded-[2rem] px-[4rem] py-[2rem]"
         >
           <div className="flex items-center gap-4 justify-center">
-            <img src={Logo} alt="" className="h-[5rem]" />
+            <img src={Logo} alt="" className="h-[4rem]" />
             <h1 className="text-slate-100 uppercase">Helpfulman</h1>
           </div>
           <input
             type="text"
-            className="bg-transparent p-4 border-solid border-[#4e0eff] border-[1px] rounded-md text-white text-[1rem] focus:border-solid focus:border-[#997af0] focus:border focus:outline-none"
+            className={`${isExpanded ? 'w-40' : ''} bg-transparent p-[1rem] border-solid border-[#4e0eff] border-[1px] rounded-md text-white focus:border-solid focus:border-[#997af0] focus:border focus:outline-none`}
             placeholder="Username"
             name="username"
             value={formik.values.username}
             onChange={formik.handleChange}
           />
           {formik.errors.username && formik.touched.username && (
-            <p className="text-red-600">{formik.errors.username}</p>
+            <p className="text-red-600  text-xs text-xs">{formik.errors.username}</p>
           )}
           <input
             type="email"
-            className="bg-transparent p-4 border-solid border-[#4e0eff] border-[1px] rounded-md text-white text-[1rem] focus:border-solid focus:border-[#997af0] focus:border focus:outline-none"
+            className={` ${isExpanded ? 'w-40' : ''} bg-transparent p-[1rem] border-solid border-[#4e0eff] border-[1px] rounded-md text-white focus:border-solid focus:border-[#997af0] focus:border focus:outline-none`}
             placeholder="Email"
             name="email"
             value={formik.values.email}
             onChange={formik.handleChange}
           />
           {formik.errors.email && formik.touched.email && (
-            <p className="text-red-600">{formik.errors.email}</p>
+            <p className="text-red-600  text-xs">{formik.errors.email}</p>
           )}
           <input
             type="password"
-            className="bg-transparent p-4 border-solid border-[#4e0eff] border-[1px] rounded-md text-white text-[1rem] focus:border-solid focus:border-[#997af0] focus:border focus:outline-none"
+            className={`${isExpanded ? 'w-40' : ''} bg-transparent p-[1rem] border-solid border-[#4e0eff] border-[1px] rounded-md text-white focus:border-solid focus:border-[#997af0] focus:border focus:outline-none`}
             placeholder="Password"
             name="password"
             value={formik.values.password}
             onChange={formik.handleChange}
           />
           {formik.errors.password && formik.touched.password && (
-            <p className="text-red-600">{formik.errors.password}</p>
+            <p className="text-red-600  text-xs">{formik.errors.password}</p>
           )}
           <input
             type="password"
-            className="bg-transparent p-4 border-solid border-[#4e0eff] border-[1px] rounded-md text-white text-[1rem] focus:border-solid focus:border-[#997af0] focus:border focus:outline-none"
+            className={` ${isExpanded ? 'w-40' : ''} bg-transparent p-[1rem] border-solid border-[#4e0eff] border-[1px] rounded-md text-white focus:border-solid focus:border-[#997af0] focus:border focus:outline-none`}
             placeholder="Confirm Password"
             name="confirmPassword"
             value={formik.values.confirmPassword}
             onChange={formik.handleChange}
           />
           {formik.errors.confirmPassword && formik.touched.confirmPassword && (
-            <p className="text-red-600">{formik.errors.confirmPassword}</p>
+            <p className="text-red-600  text-xs">{formik.errors.confirmPassword}</p>
           )}
           <button
             type="submit"
