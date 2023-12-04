@@ -21,7 +21,7 @@ const Chat = () => {
   }, [])
 
   useEffect(() => {
-    if (!user) {
+    if (!user._id) {
       navigate("/login");
     } else {
       const fetchData = async () => {
