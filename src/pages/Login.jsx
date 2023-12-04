@@ -79,7 +79,7 @@ const Login = () => {
           </button>
           <span className="text-white">
             Don't have an account?
-            <Link to="/login">
+            <Link to="/register">
               <span className="text-[#4e0eff] font-bold">register</span>
             </Link>
           </span>
