@@ -9,7 +9,9 @@ const persistConfig = {
   key: 'root',
   storage: storage,
   stateReconciler: autoMergeLevel1,
+  blacklist: ['user'], // thêm dòng này
 };
+
 
 const reducers = combineReducers({
     user: userReducer, 
